@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+
+    
+}
+
+h1 {
+    color: white;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.form {
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 30px;
+}
+
+.results {
+background-color: aliceblue;
+
+
+margin-left: 200px;
+margin-right: 200px;
+}
+
+.rating{
+    width: 20px;
+    height: 20px;
+}
+
+.poster{
+    width: 200px;
+    height: 200px;
+    margin-right: 20px;
+}
+.movie{
+    display: flex;
+    color: black;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+
