@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: black;
-    color: white;
+    background-color: rgba(10, 7, 7, 0.784);
+    
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
 
@@ -26,12 +26,30 @@ justify-content: center;
 margin: 30px;
 }
 
+.form input {
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    padding-left: 5px;
+}
+
+#search-button {
+    background-color: rgb(43, 186, 226);
+    border-radius: 10px;
+    height: 41px;
+    font-size: large;
+    border: none;
+    margin-left: 5px;
+}
+
 .results {
 background-color: aliceblue;
 
 
-margin-left: 200px;
-margin-right: 200px;
+margin-left: 20%;
+margin-right: 20%;
 }
 
 .rating{
@@ -40,16 +58,59 @@ margin-right: 200px;
 }
 
 .poster{
-    width: 200px;
-    height: 200px;
-    margin-right: 20px;
+    max-width: 100%;
+    height: auto;
+    
 }
 .movie{
-    display: flex;
+    /* display: flex; */
     color: black;
-    padding: 20px;
-    margin-bottom: 20px;
+    /* width: 100vw;
+    height: 1000vw; */
+    padding:10%;
+    min-width: 100px;
+
 }
 
 
 
+.wish-body {
+    background-color: rgb(63, 131, 191);
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#subtitle {
+    color: rgb(43, 186, 226);
+}
+
+#button-wishList {
+    background-color: black;
+    border: none;
+    color: aliceblue;
+    border-radius: 50%;
+    padding: 10px;
+    
+}
+
+.button-add-watch {
+    margin-left: 20px;
+}
+
+.reset-search {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+
+}
+
+#reset-button {
+    background-color: brown;
+    border: none;
+    font-size: x-small;
+    border-radius: 2px;
+    
+}
