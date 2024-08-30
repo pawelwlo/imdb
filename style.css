@@ -1,55 +1,105 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: rgba(10, 7, 7, 0.784);
     
-    font-family: "Inter", sans-serif;
+    
+    font-family: "SUSE", sans-serif;
     font-optical-sizing: auto;
-
     
+
+    background-image: url("cinema.jpg");
+    background-size: cover;
 }
 
 h1 {
-    color: white;
+    color: rgb(199, 206, 206);
+    font-size: 3em;
+    
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-top: 3em;
+}
+
+header > a {
+    color: rgb(238, 244, 238);
+    text-decoration: none;
+    font-size: 2em;
+    background-color: rgb(95, 210, 210);
+    padding: 0em 1em;
+    border-radius: 0.5em;
+
+}
+
+header > a:hover {
+    color: bisque;
+}
+
+.title {
+    font-size: 2.5em;
+    font-weight: bold;
 }
 
 .form {
 display: flex;
 align-items: center;
 justify-content: center;
-margin: 30px;
+
 }
 
+.form-container {
+    display: flex;
+    margin: 1em auto;
+    align-items: center;
+    background-color: rgb(235, 236, 242);
+    padding: 0.4em 0.4em;
+    border-radius: 0.8em;
+    box-shadow: 5px 5px 5px rgb(53, 48, 48);
+    
+}
 .form input {
-    height: 40px;
-    width: 200px;
+    height: 2em;
+    width: 10em;
     border-radius: 10px;
     border: none;
-    font-size: 18px;
+    font-size: 1.5em;
     padding-left: 5px;
+    background-color: rgb(215, 215, 226);
+    /* border: solid 1px; */
 }
 
 #search-button {
-    background-color: rgb(43, 186, 226);
+    background-color: rgb(158, 162, 176);
     border-radius: 10px;
-    height: 41px;
-    font-size: large;
+    height: auto;
+    font-size: 1em;
     border: none;
+    padding: 1em 2em;
     margin-left: 5px;
+    display: inline-block;
+    transition-duration: 0.4s;
+}
+
+#search-button:hover {
+    background-color: rgb(215, 208, 208);
+}
+
+#search-button:active {
+    transform: translateY(4px);
 }
 
 .results {
-background-color: aliceblue;
-
-
-margin-left: 20%;
-margin-right: 20%;
+    display: grid;
+    grid-template-columns: 1fr ;
+    grid-template-rows: 1fr auto ;
+    border-radius: 0.4em;
+    
+    background-image: linear-gradient(rgb(190, 150, 134), rgb(8, 195, 148));
+    margin: 0em 3em;
+   
 }
 
 .rating{
@@ -60,16 +110,24 @@ margin-right: 20%;
 .poster{
     max-width: 100%;
     height: auto;
+    margin-right: 1.5em;
     
 }
-.movie{
-    /* display: flex; */
-    color: black;
-    /* width: 100vw;
-    height: 1000vw; */
-    padding:10%;
-    min-width: 100px;
 
+.movie-text {
+    width: 50%;
+    max-width: 500px;
+}
+.movie{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em 1em;
+    /* border-bottom: solid 1px; */
+    
+    box-shadow: 10px 5px 5px rgb(40, 40, 40);
+   
+    
 }
 
 
@@ -80,21 +138,43 @@ margin-right: 20%;
     margin-right: 20%;
 }
 
-#subtitle {
-    color: rgb(43, 186, 226);
+
+#add-button-text {
+    font-size: 1.5em;
+    margin-left: 1em;
+    font-weight: bold;
 }
 
-#button-wishList {
-    background-color: black;
-    border: none;
-    color: aliceblue;
+
+.button.add {
+    width: 1.3em;
+    height: 1.3em;
     border-radius: 50%;
-    padding: 10px;
-    
+    background-color: rgb(242, 141, 47);
+    font-size: 2em;
+    box-shadow: 1px 1px 1px 1px gray;
+    display: inline-block;
+    border: none;
+    transition-duration: 0.4s;
+
 }
 
-.button-add-watch {
-    margin-left: 20px;
+.button.add:hover {
+    background-color: rgb(231, 81, 12);
+}
+
+.button.add:active {
+    transform: translateY(4px);
+}
+
+.button.delete {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background-color: rgb(208, 12, 71);
+    font-size: 3em;
+    border: none;
+    display: none;
 }
 
 .reset-search {
@@ -113,4 +193,34 @@ margin-right: 20%;
     font-size: x-small;
     border-radius: 2px;
     
+}
+
+@media only screen and (max-width: 997px) {
+    .movie {
+        flex-direction: column;
+    }
+
+    .poster {
+        height: auto;
+        width: 50%;
+        margin: 0;
+        padding: 1em;
+    }
+
+    .movie-text {
+        width: 100%;
+        padding: 0.5em;
+    }
+    header {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    header > a {
+        font-size: 1.5em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
 }
