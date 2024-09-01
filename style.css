@@ -93,12 +93,13 @@ justify-content: center;
 
 .results {
     display: grid;
-    grid-template-columns: 1fr ;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr auto ;
     border-radius: 0.4em;
-    
+    max-width: 800px;
     background-image: linear-gradient(rgb(190, 150, 134), rgb(8, 195, 148));
-    margin: 0em 3em;
+    margin: 0em auto;
+    
    
 }
 
@@ -124,7 +125,7 @@ justify-content: center;
     justify-content: center;
     padding: 2em 1em;
     /* border-bottom: solid 1px; */
-    
+    max-width: 800px;
     box-shadow: 10px 5px 5px rgb(40, 40, 40);
    
     
