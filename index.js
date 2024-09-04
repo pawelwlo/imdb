@@ -21,7 +21,7 @@ if (searchButton) {
 async function getFilms(e) {
     e.preventDefault();
     
-    const res = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=90ef2952&t=${searchInput.value}&plot=full`);
+    const res = await fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=90ef2952&t=${searchInput.value}&plot=full`);
     const data = await res.json();
     
     let movie = {
