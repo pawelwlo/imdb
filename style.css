@@ -37,7 +37,9 @@ header > a {
 header > a:hover {
     color: bisque;
 }
-
+.id {
+    display: none;
+}
 .title {
     font-size: 2.5em;
     font-weight: bold;
@@ -137,6 +139,7 @@ justify-content: center;
     background-color: rgb(63, 131, 191);
     margin-left: 20%;
     margin-right: 20%;
+   
 }
 
 
@@ -175,7 +178,7 @@ justify-content: center;
     background-color: rgb(208, 12, 71);
     font-size: 3em;
     border: none;
-    display: none;
+    
 }
 
 .reset-search {
@@ -194,6 +197,26 @@ justify-content: center;
     font-size: x-small;
     border-radius: 2px;
     
+}
+
+#wish-Movies-Section {
+    /* background-color: rgb(235, 236, 242); */
+    color: aliceblue;
+    padding: 2em;
+    height: 100%;
+}
+
+.wishListMovies {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: inline;
 }
 
 @media only screen and (max-width: 997px) {

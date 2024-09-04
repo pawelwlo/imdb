@@ -1,8 +1,8 @@
 const searchInput = document.getElementById("search");
 const resultOutput = document.getElementById("search-results");
 const searchButton = document.getElementById("search-button");
-const wishListDisplay = document.getElementById("wishListMovies")
-const resetButton = document.getElementById("reset-button")
+const wishListDisplay = document.getElementById("wishListMovies");
+const resetButton = document.getElementById("reset-button");
 
 // localStorage.clear()
 
@@ -15,9 +15,8 @@ if (moviesFromLocalStorage && moviesFromLocalStorage.length > 0) {
 }
 
 if (searchButton) {
-     searchButton.addEventListener("click", getFilms);
+    searchButton.addEventListener("click", getFilms);
 }
-
 
 async function getFilms(e) {
     e.preventDefault();
@@ -29,7 +28,7 @@ async function getFilms(e) {
         id: data['imdbID'],
         content: `
             <div class="movie">
-               
+                <span class="id">${data['imdbID']}</span>
                 <img class="poster" src="${data['Poster']}">
                 <div class="movie-text">
                     <p class="title">${data['Title']}</p>
@@ -39,21 +38,14 @@ async function getFilms(e) {
                     <p><img class="rating" src="star.png"> ${data['imdbRating']}</p>
                     <p>Genre: ${data['Genre']}</p>
                     <p>${data['Plot'].slice(0,500)}...</p>
-                    <button class="button add" id="button-wishList">+</button> <span id="add-button-text">Add to Watchlist</span>
-                    <button class="button delete" id="delete-button">-</button>
                 </div>
+                <button class="button add" id="button-wishList">+</button> 
+                <span id="add-button-text">Add to Watchlist</span>
                 
-               
-               
             </div>
-            
-           
         `
-        
     };
 
-    
-    console.log(movie)
     movies.unshift(movie);
     localStorage.setItem("movies", JSON.stringify(movies));
     
@@ -62,94 +54,107 @@ async function getFilms(e) {
     location.reload(); 
 }
 
-// console.log(moviesFromLocalStorage)
-
 function renderMovies() {
-     if(resultOutput) {
-          resultOutput.innerHTML = movies.map(movie => movie.content).join("");
-          
-     }
-   
+    if (resultOutput) {
+        resultOutput.innerHTML = movies.map(movie => movie.content).join("");
+    }
 }
-// const buttonWish = document.getElementById("button-wishList");
-// const deleteButton = document.getElementById("delete-button")
-// let moviesWishList = []
 
-// function addToWishList(e) {
-//      e.preventDefault();
-     
-//      let movieToAdd = e.target.parentElement.innerHTML;
-//      moviesWishList.unshift(movieToAdd);
-//      localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
-//      console.log("movie added to wish list")
-//      renderMoviesWishList();
-     
-//  }
+let moviesWishList = [];
 
-//  if(buttonWish) {
-//      buttonWish.addEventListener("click", addToWishList)
-//  }
+let movieToAddFromLocalStorage = JSON.parse(localStorage.getItem("moviesWishList"));
+
+if (movieToAddFromLocalStorage) {
+    moviesWishList = movieToAddFromLocalStorage;
+    renderMoviesWishList();
+}
+
+function renderMoviesWishList() {
+    if (wishListDisplay) {
+        wishListDisplay.innerHTML = moviesWishList.map(movie => {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = movie;
+
+            // Replace the wish list button with delete button
+            const buttonWish = tempDiv.querySelector("#button-wishList");
+            const wishText = tempDiv.querySelector('#add-button-text');
+
+            if (buttonWish) {
+                buttonWish.outerHTML = `<button class="button delete" id="delete-button">-</button>`;
+            }
+
+            if (wishText) {
+                wishText.outerHTML = `<span id="delete-button-text">Remove from Watchlist</span>`;
+            }
+
+            return tempDiv.innerHTML;
+        }).join("");
+
+        // Attach event listeners to the delete buttons
+        document.querySelectorAll("#delete-button").forEach(button => {
+            button.addEventListener("click", deleteFromWishList);
+        });
+    }
+}
 
 
-// let movieToAddFromLocalStorage = JSON.parse(localStorage.getItem("moviesWishList"));
+function deleteFromWishList(e) {
+    e.preventDefault();
 
-// if (movieToAddFromLocalStorage) {
-//      moviesWishList = movieToAddFromLocalStorage;
-//      renderMoviesWishList()
-// }
+    // Attempt to find the .movie element by moving up the DOM tree from the delete button
+    const movieElement = e.target.previousElementSibling.innerHTML;
+    console.log(movieElement)
+    // Check if the .movie element was found
+    // if (!movieElement) {
+    //     console.error("Movie element not found. Please check the HTML structure.");
+    //     return;
+    // }
 
+    // Get the innerHTML of the movie element
+    const movieToDelete = movieElement.innerHTML;
 
+    // Filter out the movie from the moviesWishList array
+    moviesWishList = moviesWishList.filter(movie => movie !== movieToDelete);
 
-// if(buttonWish) {
-//      buttonWish.addEventListener("click", function(e) {
-//           e.preventDefault();
-//           console.log("button wish clicked")
-//           let movieToAdd = e.target.parentElement.innerHTML;
-//           moviesWishList.unshift(movieToAdd);
-//           localStorage.setItem("moviesWishList", JSON.stringify((moviesWishList) ))
-//           alert("New movie was added to your watch list")
-//          renderMoviesWishList()
-        
-         
-          
-         
-//      })
-// }
+    // Update localStorage with the modified wish list
+    localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
 
-// if(deleteButton) {
-//      deleteButton.addEventListener("click", function(e) {
-//           e.preventDefault()
-//           const movieToDelete = e.target.parentElement.innerHTML;
-//           movieToAddFromLocalStorage.removeItem(movieToDelete)
-//           renderMoviesWishList()
-//           console.log("movie deleted from wishlist")
-//      }
+    console.log("Movie deleted from watch list");
 
-//      )
-// }
-
-// function renderMoviesWishList() {
-//      if (wishListDisplay) {
-//           wishListDisplay.innerHTML = moviesWishList;
-//      }
-     
-// }
-
-// document.addEventListener("click", function(e){
-//      console.log(e.target)
-// })
+    // Re-render the updated wish list
+    renderMoviesWishList();
+}
 
 
 
 
-// localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
+function addToWishList(e) {
+    e.preventDefault();
+    
+    let movieToAdd = e.target.parentNode.innerHTML;
+
+    moviesWishList.unshift(movieToAdd);
+    localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
+    
+    console.log("Movie added to wish list");
+    
+    renderMoviesWishList();
+}
+
+// Attach event listeners to the initial wish buttons if they exist
+document.querySelectorAll("#button-wishList").forEach(button => {
+    button.addEventListener("click", addToWishList);
+});
 
 if (resetButton) {
-     resetButton.addEventListener("click", function(){
-          alert("your search results were cleared")
-          
-          window.localStorage.removeItem("movies");
-          location.reload(); 
-     })
+    resetButton.addEventListener("click", function(){
+        alert("Your search results were cleared");
+        window.localStorage.removeItem("movies");
+        location.reload(); 
+    });
 }
 
+document.addEventListener("click", function(e) {
+    console.log(e.target)
+})
+console.log(moviesWishList)
