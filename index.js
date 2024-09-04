@@ -4,14 +4,20 @@ const searchButton = document.getElementById("search-button");
 const wishListDisplay = document.getElementById("wishListMovies");
 const resetButton = document.getElementById("reset-button");
 
-// localStorage.clear()
-
 let movies = [];
+let movie = "";
+let moviesWishList = [];
 let moviesFromLocalStorage = JSON.parse(localStorage.getItem("movies"));
+let movieToAddFromLocalStorage = JSON.parse(localStorage.getItem("moviesWishList"));
 
 if (moviesFromLocalStorage && moviesFromLocalStorage.length > 0) {
     movies = moviesFromLocalStorage;
     renderMovies();
+}
+
+if (movieToAddFromLocalStorage) {
+    moviesWishList = movieToAddFromLocalStorage;
+    renderMoviesWishList();
 }
 
 if (searchButton) {
@@ -23,25 +29,24 @@ async function getFilms(e) {
     
     const res = await fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=90ef2952&t=${searchInput.value}&plot=full`);
     const data = await res.json();
-    
-    let movie = {
+    let buttonId = data['imdbID'];
+    movie = {
         id: data['imdbID'],
         content: `
             <div class="movie">
-                <span class="id">${data['imdbID']}</span>
                 <img class="poster" src="${data['Poster']}">
                 <div class="movie-text">
+                    <span class="id">${data['imdbID']}</span>
                     <p class="title">${data['Title']}</p>
                     <p>Year: ${data['Year']}</p>
                     <p>Actors: ${data['Actors']}</p>
                     <p>${data['Runtime']}</p>
                     <p><img class="rating" src="star.png"> ${data['imdbRating']}</p>
                     <p>Genre: ${data['Genre']}</p>
-                    <p>${data['Plot'].slice(0,500)}...</p>
+                    <p>${data['Plot'].slice(0, 500)}...</p>
                 </div>
-                <button class="button add" id="button-wishList">+</button> 
+                <button class="button add" id="add-${buttonId}">+</button> 
                 <span id="add-button-text">Add to Watchlist</span>
-                
             </div>
         `
     };
@@ -50,8 +55,8 @@ async function getFilms(e) {
     localStorage.setItem("movies", JSON.stringify(movies));
     
     renderMovies();
+    attachAddToWishListListeners(); // Attach the listeners to new buttons
     searchInput.value = "";
-    location.reload(); 
 }
 
 function renderMovies() {
@@ -60,13 +65,28 @@ function renderMovies() {
     }
 }
 
-let moviesWishList = [];
+// Attach event listeners to add buttons for the rendered movies
+function attachAddToWishListListeners() {
+    document.querySelectorAll(".button.add").forEach(button => {
+        button.addEventListener("click", addToWishList);
+    });
+}
 
-let movieToAddFromLocalStorage = JSON.parse(localStorage.getItem("moviesWishList"));
+function addToWishList(e) {
+    e.preventDefault();
 
-if (movieToAddFromLocalStorage) {
-    moviesWishList = movieToAddFromLocalStorage;
-    renderMoviesWishList();
+    const movieElement = e.target.closest(".movie");
+    const movieId = movieElement.querySelector(".id").textContent;
+
+    // Find the movie by ID
+    const movieToAdd = movies.find(m => m.id === movieId);
+
+    if (movieToAdd && !moviesWishList.some(m => m.id === movieId)) {
+        moviesWishList.unshift(movieToAdd.content);
+        localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
+        console.log("Movie added to wish list");
+        renderMoviesWishList();
+    }
 }
 
 function renderMoviesWishList() {
@@ -76,7 +96,7 @@ function renderMoviesWishList() {
             tempDiv.innerHTML = movie;
 
             // Replace the wish list button with delete button
-            const buttonWish = tempDiv.querySelector("#button-wishList");
+            const buttonWish = tempDiv.querySelector(".button.add");
             const wishText = tempDiv.querySelector('#add-button-text');
 
             if (buttonWish) {
@@ -97,64 +117,26 @@ function renderMoviesWishList() {
     }
 }
 
-
 function deleteFromWishList(e) {
     e.preventDefault();
 
-    // Attempt to find the .movie element by moving up the DOM tree from the delete button
-    const movieElement = e.target.previousElementSibling.innerHTML;
-    console.log(movieElement)
-    // Check if the .movie element was found
-    // if (!movieElement) {
-    //     console.error("Movie element not found. Please check the HTML structure.");
-    //     return;
-    // }
+    const movieElement = e.target.closest(".movie");
+    const movieId = movieElement.querySelector(".id").textContent;
 
-    // Get the innerHTML of the movie element
-    const movieToDelete = movieElement.innerHTML;
+   
+    moviesWishList = moviesWishList.filter(movie => !movie.includes(movieId));
 
-    // Filter out the movie from the moviesWishList array
-    moviesWishList = moviesWishList.filter(movie => movie !== movieToDelete);
-
-    // Update localStorage with the modified wish list
     localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
-
     console.log("Movie deleted from watch list");
-
-    // Re-render the updated wish list
     renderMoviesWishList();
 }
 
-
-
-
-function addToWishList(e) {
-    e.preventDefault();
-    
-    let movieToAdd = e.target.parentNode.innerHTML;
-
-    moviesWishList.unshift(movieToAdd);
-    localStorage.setItem("moviesWishList", JSON.stringify(moviesWishList));
-    
-    console.log("Movie added to wish list");
-    
-    renderMoviesWishList();
-}
-
-// Attach event listeners to the initial wish buttons if they exist
-document.querySelectorAll("#button-wishList").forEach(button => {
-    button.addEventListener("click", addToWishList);
-});
 
 if (resetButton) {
     resetButton.addEventListener("click", function(){
         alert("Your search results were cleared");
-        window.localStorage.removeItem("movies");
-        location.reload(); 
+        localStorage.removeItem("movies");
+        location.reload();
     });
 }
 
-document.addEventListener("click", function(e) {
-    console.log(e.target)
-})
-console.log(moviesWishList)
