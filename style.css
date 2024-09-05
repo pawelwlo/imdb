@@ -7,7 +7,7 @@ body {
     font-optical-sizing: auto;
     
 
-    background-image: url("cinema.jpg");
+    background-image: url("blackandwhite.jpg");
     background-size: cover;
 }
 
@@ -16,7 +16,9 @@ h1 {
     font-size: 3em;
     
 }
-
+h4 {
+    margin: 0;
+}
 header {
     display: flex;
     align-items: center;
@@ -28,10 +30,10 @@ header > a {
     color: rgb(238, 244, 238);
     text-decoration: none;
     font-size: 2em;
-    background-color: rgb(95, 210, 210);
-    padding: 0em 1em;
+    background-color: rgb(85, 132, 87);
+    padding: 1em 1em;
     border-radius: 0.5em;
-
+    
 }
 
 header > a:hover {
@@ -43,6 +45,8 @@ header > a:hover {
 .title {
     font-size: 2.5em;
     font-weight: bold;
+    padding: 0;
+    margin: 0;
 }
 
 .form {
@@ -54,9 +58,9 @@ justify-content: center;
 
 .form-container {
     display: flex;
-    margin: 1em auto;
+    margin: 5em 1em;
     align-items: center;
-    background-color: rgb(235, 236, 242);
+    background-color: rgb(85, 132, 87);
     padding: 0.4em 0.4em;
     border-radius: 0.8em;
     box-shadow: 5px 5px 5px rgb(53, 48, 48);
@@ -101,7 +105,7 @@ justify-content: center;
     max-width: 800px;
     background-image: linear-gradient(rgb(190, 150, 134), rgb(8, 195, 148));
     margin: 0em auto;
-    
+    justify-content: end;
    
 }
 
@@ -118,35 +122,44 @@ justify-content: center;
 }
 
 .movie-text {
-    width: 50%;
-    max-width: 500px;
+    font-size: 1em;
 }
 .movie{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2em 1em;
-    /* border-bottom: solid 1px; */
-    max-width: 800px;
-    box-shadow: 10px 5px 5px rgb(40, 40, 40);
-   
+    display: grid;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2);
+    grid-template-areas:
+    "a a"
+    "c c";
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+    
+    border-bottom: solid;
+    margin: 1em;
+    padding: 2em;
     
 }
 
 
 
 .wish-body {
-    background-color: rgb(63, 131, 191);
-    margin-left: 20%;
-    margin-right: 20%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto ;
+    border-radius: 0.4em;
+    max-width: 800px;
+    background-image: linear-gradient(rgb(190, 150, 134), rgb(8, 195, 148));
+    margin: 0em auto;
    
 }
 
 
 #add-button-text {
     font-size: 1.5em;
-    margin-left: 1em;
+    margin: 0;
     font-weight: bold;
+    margin-top: 0.5em;
 }
 
 
@@ -158,9 +171,11 @@ justify-content: center;
     font-size: 2em;
     box-shadow: 1px 1px 1px 1px gray;
     display: inline-block;
+    align-items: flex-start;
     border: none;
     transition-duration: 0.4s;
-
+    grid-area: c;
+    align-self: end;
 }
 
 .button.add:hover {
@@ -172,12 +187,15 @@ justify-content: center;
 }
 
 .button.delete {
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.3em;
+    height: 1.3em;
     border-radius: 50%;
-    background-color: rgb(208, 12, 71);
-    font-size: 3em;
+    background-color: rgb(242, 141, 47);
+    font-size: 2em;
+    box-shadow: 1px 1px 1px 1px gray;
+    display: inline-block;
     border: none;
+    transition-duration: 0.4s;
     
 }
 
@@ -199,16 +217,30 @@ justify-content: center;
     
 }
 
-#wish-Movies-Section {
-    /* background-color: rgb(235, 236, 242); */
+.back-button {
+    background-color: aqua;
     color: aliceblue;
-    padding: 2em;
-    height: 100%;
 }
+
+/* #wish-Movies-Section {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto ;
+    border-radius: 0.4em;
+    max-width: 800px;
+    background-image: linear-gradient(rgb(190, 150, 134), rgb(8, 195, 148));
+    margin: 0em auto;
+    justify-content: end;
+} */
 
 .wishListMovies {
     font-size: 3em;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 1em;
+    color: aliceblue;
 }
 
 .invisible {
@@ -219,11 +251,18 @@ justify-content: center;
     display: inline;
 }
 
-@media only screen and (max-width: 997px) {
+@media only screen and (max-width: 800px) {
     .movie {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1em 1em;
+        margin: 1em 1em;
     }
-
+    .button.add {
+        align-self: center;
+    }
     .poster {
         height: auto;
         width: 50%;
@@ -234,6 +273,7 @@ justify-content: center;
     .movie-text {
         width: 100%;
         padding: 0.5em;
+        font-size: 0.8em;
     }
     header {
         display: flex;
@@ -246,5 +286,33 @@ justify-content: center;
 
     h1 {
         font-size: 2em;
+    }
+    .form-container {
+        flex-direction: column;
+        margin: 0.5em;
+    }
+    .form input {
+        margin: 0.5em 0.5em;
+    }
+    #search-button {
+        padding: 0.5em;
+        font-size: 1em;
+        width: 15em;
+    }
+    .results {
+        /* display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto ; */
+        display: flex;
+        flex-direction: column;
+        border-radius: 0.4em;
+        max-width: 30em;
+        background: wh;
+        margin: auto;
+        padding: 0;
+       
+    }
+    .wishListMovies {
+        color: rgb(246, 242, 10);
     }
 }

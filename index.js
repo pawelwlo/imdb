@@ -44,7 +44,9 @@ async function getFilms(e) {
                     <p><img class="rating" src="star.png"> ${data['imdbRating']}</p>
                     <p>Genre: ${data['Genre']}</p>
                     <p>${data['Plot'].slice(0, 500)}...</p>
+                    
                 </div>
+                
                 <button class="button add" id="add-${buttonId}">+</button> 
                 <span id="add-button-text">Add to Watchlist</span>
             </div>
